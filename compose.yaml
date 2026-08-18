@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: refrigops-postgres
+    environment:
+      POSTGRES_DB: refrigops
+      POSTGRES_USER: refrigops
+      POSTGRES_PASSWORD: ${REFRIGOPS_DB_PASSWORD}
+    ports:
+      - "5433:5432"
+    volumes:
+      - refrigops_postgres_data:/var/lib/postgresql/data
+
+volumes:
+  refrigops_postgres_data:
