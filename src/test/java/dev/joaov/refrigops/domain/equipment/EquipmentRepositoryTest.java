@@ -17,8 +17,8 @@ class EquipmentRepositoryTest {
     @Test
     void shouldSaveAndFindEquipment() {
         Equipment equipment = new Equipment();
-        equipment.setCode("COMP-13");
-        equipment.setName("Compressor 13");
+        equipment.setCode("TEST-COMP-01");
+    equipment.setName("Compressor de Teste");
         equipment.setType(EquipmentType.COMPRESSOR);
         equipment.setStatus(EquipmentStatus.STOPPED);
         equipment.setActive(true);
@@ -32,11 +32,12 @@ class EquipmentRepositoryTest {
                 .findById(saved.getId())
                 .orElseThrow();
 
-        assertEquals("COMP-13", found.getCode());
-        assertEquals("Compressor 13", found.getName());
+        assertEquals("TEST-COMP-01", found.getCode());
+        assertEquals("Compressor de Teste", found.getName());
         assertEquals(EquipmentType.COMPRESSOR, found.getType());
         assertEquals(EquipmentStatus.STOPPED, found.getStatus());
         assertTrue(found.isActive());
         assertEquals("Sala 1", found.getLocation());
     }
 }
+
