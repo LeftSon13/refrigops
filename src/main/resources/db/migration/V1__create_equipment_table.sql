@@ -1,0 +1,9 @@
+CREATE TABLE equipment (
+    id BIGSERIAL PRIMARY KEY,
+    code VARCHAR(50) NOT NULL UNIQUE,
+    name VARCHAR(100) NOT NULL,
+    type VARCHAR(30) NOT NULL,
+    status VARCHAR(30) NOT NULL,
+    active BOOLEAN NOT NULL,
+    location VARCHAR(100) NOT NULL
+);
