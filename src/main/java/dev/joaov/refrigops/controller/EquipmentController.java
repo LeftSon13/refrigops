@@ -28,6 +28,11 @@ public class EquipmentController {
 
     @PostMapping
     public Equipment create(@RequestBody CreateEquipmentRequest request) {
-        return equipmentService.create(request);
+        return equipmentService.create(
+                request.code(),
+                request.name(),
+                request.type(),
+                request.location()
+        );
     }
 }

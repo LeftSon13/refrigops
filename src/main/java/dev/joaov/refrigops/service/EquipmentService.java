@@ -1,9 +1,9 @@
 package dev.joaov.refrigops.service;
 
-import dev.joaov.refrigops.controller.dto.CreateEquipmentRequest;
 import dev.joaov.refrigops.domain.equipment.Equipment;
 import dev.joaov.refrigops.domain.equipment.EquipmentRepository;
 import dev.joaov.refrigops.domain.equipment.EquipmentStatus;
+import dev.joaov.refrigops.domain.equipment.EquipmentType;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,13 +17,18 @@ public class EquipmentService {
         this.equipmentRepository = equipmentRepository;
     }
 
-    public Equipment create(CreateEquipmentRequest request) {
+    public Equipment create(
+            String code,
+            String name,
+            EquipmentType type,
+            String location
+    ) {
         Equipment equipment = new Equipment();
 
-        equipment.setCode(request.code());
-        equipment.setName(request.name());
-        equipment.setType(request.type());
-        equipment.setLocation(request.location());
+        equipment.setCode(code);
+        equipment.setName(name);
+        equipment.setType(type);
+        equipment.setLocation(location);
 
         equipment.setStatus(EquipmentStatus.STOPPED);
         equipment.setActive(true);
