@@ -3,6 +3,7 @@ package dev.joaov.refrigops.controller;
 import dev.joaov.refrigops.controller.dto.CreateEquipmentRequest;
 import dev.joaov.refrigops.domain.equipment.Equipment;
 import dev.joaov.refrigops.service.EquipmentService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,7 +28,7 @@ public class EquipmentController {
     }
 
     @PostMapping
-    public Equipment create(@RequestBody CreateEquipmentRequest request) {
+    public Equipment create(@Valid @RequestBody CreateEquipmentRequest request) {
         return equipmentService.create(
                 request.code(),
                 request.name(),
