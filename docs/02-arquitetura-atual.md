@@ -4,7 +4,7 @@
 
 # Arquitetura atual
 
-## 1. Escopo e data da auditoria
+## 1. Escopo e data do snapshot técnico
 
 **[CONFIRMADO — REPOSITÓRIO]** Auditada no checkout local em 2026-08-29:
 
@@ -20,6 +20,8 @@ main
 ```
 
 A árvore de trabalho estava limpa e `main` acompanhava `origin/main`.
+
+Esse bloco é o snapshot da aplicação que serve de base à documentação, não o estado volátil da branch documental. Em 2026-09-03, o código foi confrontado novamente na branch `docs/documentacao-operacional`; ela permanecia baseada em `938480a` e não continha alterações em `src/`, `pom.xml`, `compose.yaml` ou configurações da aplicação. O estado mais recente da branch e das validações fica em [`11-contexto-atual.md`](11-contexto-atual.md).
 
 ## 2. Stack confirmada
 
@@ -223,7 +225,7 @@ Só existem listagem e criação. Não há busca por ID, atualização, desativa
 
 ### Contrato e documentação de API
 
-Não há OpenAPI/Swagger ou documento formal de contrato confirmado.
+Não há OpenAPI/Swagger nem contrato executável. O comportamento auditado está descrito em [`09-contrato-api-atual.md`](09-contrato-api-atual.md), incluindo as dívidas que ainda impedem tratá-lo como contrato público definitivo.
 
 ### Segurança de aplicação
 
