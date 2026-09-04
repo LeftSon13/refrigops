@@ -2,11 +2,11 @@
 
 # Contexto atual
 
-> Atualizado em 2026-09-03 a partir da revisão final da branch documental e do checkout local.
+> Atualizado em 2026-09-03 a partir da implementação da resposta pública de Equipment.
 
 ## Fase
 
-Fundação documental finalizada na branch, sem desenvolvimento de nova funcionalidade, aguardando decisão do usuário sobre push e Pull Request.
+Implementação do contrato público `EquipmentResponse` concluída na branch `feature/equipment-response`, aguardando revisão por Pull Request.
 
 ## Repositório auditado
 
@@ -39,15 +39,17 @@ No início da revisão, o commit da documentação era:
 
 A comparação `main...17502f9` continha 34 arquivos e 4.743 linhas exclusivamente documentais. Não havia alterações em `src/`, `pom.xml`, `compose.yaml`, migrations ou configuração da aplicação. As correções finais desta revisão também permanecem restritas à documentação.
 
-## Último estado técnico conhecido da aplicação
+## Base técnica desta entrega
 
 **[CONFIRMADO — REPOSITÓRIO]**
 
-O código de aplicação da branch continua baseado em:
+A branch `feature/equipment-response` foi criada a partir da `main` atualizada em:
 
 ```text
-938480a Merge pull request #5 from LeftSon13/feature/equipment-validation
+369a747 Merge pull request #7 from LeftSon13/docs/documentacao-operacional
 ```
+
+O último incremento de código anterior a esta entrega permanece sendo `938480a`, merge da validação de equipamentos.
 
 ## Implementado
 
@@ -58,7 +60,7 @@ O código de aplicação da branch continua baseado em:
 - `CreateEquipmentRequest`;
 - `GET /api/equipment`;
 - `POST /api/equipment`;
-- `EquipmentController` ainda retorna `Equipment` e `List<Equipment>` diretamente nas respostas HTTP;
+- `EquipmentController` retorna `EquipmentResponse` e `List<EquipmentResponse>` nas respostas HTTP;
 - estado inicial `STOPPED`;
 - `active = true` na criação;
 - Bean Validation;
@@ -131,19 +133,21 @@ O commit `17502f9` criou essa fundação documental. A revisão final corrige o 
 
 ## Feature em andamento
 
-Nenhuma feature de código está em andamento.
+Issue #8 — **Desacoplar respostas da API da entidade Equipment**.
 
-A documentação é o único trabalho atual autorizado.
+Implementado na branch `feature/equipment-response`:
 
-## Próxima Issue técnica recomendada
+- `EquipmentResponse` com os campos públicos já existentes;
+- conversão de `Equipment` para `EquipmentResponse` na fronteira HTTP;
+- GET e POST sem exposição direta da entidade JPA;
+- conteúdo JSON de GET e POST coberto por testes;
+- status HTTP 200 preservado no POST;
+- Service e Repository mantidos independentes dos DTOs HTTP;
+- nenhuma alteração de schema ou migration.
 
-Após integrar esta branch, deve ser avaliado se a Issue já existe no GitHub ou se precisa ser criada.
+## Issue técnica atual
 
-```text
-Desacoplar respostas da API da entidade Equipment
-```
-
-Objetivo: criar DTO de resposta e impedir que a entidade JPA seja o contrato JSON.
+Issue #8 criada no GitHub e implementada nesta branch. A próxima etapa é revisão manual da Pull Request, sem merge automático.
 
 ## Pendências
 ### Revisão antes de publicação pública
@@ -159,16 +163,15 @@ Não foram encontrados credenciais, tokens, senhas reais, dados pessoais ou ende
 
 - confirmar o MVP de ronda e a prioridade em relação à consolidação de Equipment;
 - revisar os estados de Equipment;
-- definir os campos públicos de `EquipmentResponse`;
-- confirmar o estado atual das Issues no GitHub.
+- revisar e aprovar a Pull Request da Issue #8;
 
 ## Bloqueios
 A implementação de regras de processo industrial continua bloqueada por descoberta e validação de domínio.
 
 ## Próximo resultado recomendado
 
-1. revisar o commit documental local e decidir sobre push, Pull Request e review;
-2. após a integração, avaliar/criar a Issue **Desacoplar respostas da API da entidade Equipment**;
-3. manter status HTTP, erros, duplicidade, busca e atualização fora desse incremento, salvo nova decisão explícita.
+1. revisar manualmente a Pull Request da Issue #8;
+2. não realizar merge antes da revisão;
+3. manter status HTTP, erros, duplicidade, busca e atualização fora deste incremento.
 
 Nota editorial: detalhes de classificação e bloqueios vinculados a ativos específicos foram suprimidos, sem alterar os checkpoints técnicos acima ou atribuir novas decisões àquela data.

@@ -4,7 +4,7 @@
 
 # Contrato atual da API
 
-> Estado confirmado no código em 2026-08-29. Este documento descreve o comportamento atual, inclusive dívidas conhecidas; não significa que todo o contrato esteja aprovado como definitivo.
+> Estado confirmado no código em 2026-09-03. Este documento descreve o comportamento atual, inclusive dívidas conhecidas; não significa que todo o contrato esteja aprovado como definitivo.
 
 ## Base
 
@@ -22,7 +22,7 @@ GET /api/equipment
 
 ### Resposta atual
 
-HTTP 200 com array da entidade `Equipment` serializada.
+HTTP 200 com array de `EquipmentResponse`.
 
 Exemplo inferido do modelo:
 
@@ -40,7 +40,7 @@ Exemplo inferido do modelo:
 ]
 ```
 
-**[PENDENTE]** Não há teste confirmando conteúdo JSON ou ordenação da listagem.
+O conteúdo JSON da listagem é coberto por teste de integração do Controller. A API ainda não define ordenação para esse endpoint.
 
 ## Criar equipamento
 
@@ -71,7 +71,7 @@ Content-Type: application/json
 
 ### Resposta válida atual
 
-HTTP 200 com a entidade salva:
+HTTP 200 com `EquipmentResponse` correspondente à entidade salva:
 
 ```json
 {
@@ -117,9 +117,21 @@ DEACTIVATED
 
 Na criação, o estado é sempre `STOPPED` e `active` é sempre `true`.
 
-## Dívida principal
+## Separação do contrato público
 
-A API expõe a entidade JPA. A proposta é introduzir `EquipmentResponse` e transformar os exemplos deste documento em contrato testado.
+A API usa `EquipmentResponse` nos retornos de GET e POST. A entidade JPA `Equipment` permanece interna ao Service e ao Repository, e o Controller realiza a conversão na fronteira HTTP.
+
+O contrato público preservado contém:
+
+```text
+id
+code
+name
+type
+status
+active
+location
+```
 
 ## Decisões separadas
 
