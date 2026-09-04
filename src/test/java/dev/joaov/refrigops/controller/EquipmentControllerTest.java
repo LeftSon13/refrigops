@@ -9,7 +9,10 @@ import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -68,6 +71,41 @@ class EquipmentControllerTest {
         mockMvc.perform(post("/api/equipment")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").isNumber())
+                .andExpect(jsonPath("$.code").value("COMP-TEST-02"))
+                .andExpect(jsonPath("$.name").value("Compressor de Teste Válido"))
+                .andExpect(jsonPath("$.type").value("COMPRESSOR"))
+                .andExpect(jsonPath("$.status").value("STOPPED"))
+                .andExpect(jsonPath("$.active").value(true))
+                .andExpect(jsonPath("$.location").value("Sala 2"));
+    }
+
+    @Test
+    void shouldListEquipmentUsingPublicResponseContract() throws Exception {
+        String requestBody = """
+                {
+                  "code": "COND-TEST-03",
+                  "name": "Condensador de Teste",
+                  "type": "CONDENSER",
+                  "location": "Área Externa"
+                }
+                """;
+
+        mockMvc.perform(post("/api/equipment")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody))
                 .andExpect(status().isOk());
+
+        mockMvc.perform(get("/api/equipment"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isArray())
+                .andExpect(jsonPath("$[*].id").isNotEmpty())
+                .andExpect(jsonPath("$[*].code", hasItem("COND-TEST-03")))
+                .andExpect(jsonPath("$[*].name", hasItem("Condensador de Teste")))
+                .andExpect(jsonPath("$[*].type", hasItem("CONDENSER")))
+                .andExpect(jsonPath("$[*].status", hasItem("STOPPED")))
+                .andExpect(jsonPath("$[*].active", hasItem(true)))
+                .andExpect(jsonPath("$[*].location", hasItem("Área Externa")));
     }
 }
