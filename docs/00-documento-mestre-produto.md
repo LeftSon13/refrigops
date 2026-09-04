@@ -82,7 +82,9 @@ domínio compreendido
         ↓
 análises explicáveis
         ↓
-integrações e telemetria validadas
+integrações validadas
+        ↓
+telemetria futura
 ```
 
 O sistema pode gerar valor mesmo antes de qualquer automação industrial.
@@ -99,8 +101,10 @@ Essa proposta precisa ser validada com usuários além do próprio autor do proj
 
 **[DECISÃO]**
 
+> O software deve se adaptar à operação; a operação não deve se adaptar ao software.
+
 1. **Apoiar, não substituir, o operador.**
-2. **O software se adapta à operação.** A equipe não deve realizar ações artificiais apenas para alimentar o sistema.
+2. **A operação tem prioridade sobre o registro.** A equipe não deve realizar ações artificiais apenas para alimentar o sistema.
 3. **Dados precisam de contexto.** Um número sem unidade, origem, horário, instrumento e condição pode induzir a erro.
 4. **Distinguir medição de cálculo.** Valores medidos, digitados, importados, convertidos e estimados não são equivalentes.
 5. **Segurança antes de automação.** Integrações e alertas exigem validação proporcional ao risco.
@@ -110,6 +114,8 @@ Essa proposta precisa ser validada com usuários além do próprio autor do proj
 9. **Acessibilidade prática.** Interfaces devem considerar diferentes idades, experiências digitais, iluminação, luvas, pressa e contexto móvel. Esses fatores ainda precisam ser pesquisados.
 10. **Lacuna é melhor que dado inventado.** Uma leitura não realizada deve permanecer identificável como ausência, sem ser convertida silenciosamente em medição.
 11. **Rapidez sem falsificar.** Opções rápidas podem reduzir digitação de estados e observações recorrentes, mas o sistema não deve preencher automaticamente um número como se tivesse sido medido.
+12. **A inspeção física e a percepção do operador permanecem essenciais.** Telemetria futura complementa a ronda; não substitui observação local nem procedimentos.
+13. **Integrações industriais começam como somente leitura.** Qualquer ampliação depende de validação de engenharia, segurança e autorização.
 
 ## 8. Objetivos do produto
 
@@ -206,7 +212,7 @@ Nenhum indicador operacional ou financeiro deve ser prometido sem dados de base.
 
 O último checkpoint registrado contém uma API de equipamentos com persistência, listagem, criação e validação. O projeto usa Java 21, Spring Boot, PostgreSQL, Flyway, Testcontainers, JUnit e MockMvc.
 
-O último estado relatado foi `main` limpa no merge `938480a`, com cinco testes passando. Isso deve ser auditado no checkout atual.
+O snapshot técnico da aplicação permanece baseado no merge `938480a`. Este documento preserva o histórico; branch, testes e ambiente mais recentes devem ser consultados em [`11-contexto-atual.md`](11-contexto-atual.md).
 
 ## 14. Próxima decisão recomendada
 

@@ -8,7 +8,7 @@
 
 ## Aviso de confiabilidade
 
-Este pacote ainda **não foi confrontado com o checkout atual do RefrigOps**. As informações técnicas marcadas como históricas devem ser auditadas no repositório real antes de serem apresentadas como estado atual.
+Esta documentação registra auditorias realizadas em datas específicas. Informações voláteis sobre Git, testes, ambiente e integrações devem ser revalidadas no checkout real antes de novas alterações.
 
 Use estas classificações ao ler ou atualizar os documentos:
 
@@ -124,4 +124,4 @@ Antes de agir:
 
 ## Estado deste pacote
 
-Este material é uma **primeira versão para revisão humana**. Não significa que todas as regras descritas estejam aprovadas, que a arquitetura histórica continue igual ou que o roadmap esteja priorizado.
+Esta fundação documental não significa que todas as regras de domínio estejam aprovadas nem que o roadmap esteja priorizado. Pendências, bloqueios e o último checkpoint auditado ficam centralizados em [docs/11-contexto-atual.md](docs/11-contexto-atual.md).

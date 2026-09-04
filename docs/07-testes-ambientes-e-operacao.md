@@ -56,7 +56,7 @@ type nulo              → HTTP 400
 request válida         → HTTP 200
 ```
 
-## 3. Última execução histórica
+## 3. Histórico de execuções confirmadas
 
 **[HISTÓRICO — REPOSITÓRIO]**
 
@@ -117,7 +117,7 @@ O log confirmou:
 - Flyway validando e aplicando a migration V1;
 - testes de Controller, Repository e `contextLoads` aprovados.
 
-Portanto, a suíte atual está reconfirmada e o isolamento permanece funcionando.
+Essa foi a última execução verde registrada em 2026-08-29. Ela confirmou o isolamento naquele checkpoint, mas não substitui nova execução antes de outro PR. O resultado mais recente deve ser consultado em [`11-contexto-atual.md`](11-contexto-atual.md).
 
 ## 4. Estratégia de testes
 
