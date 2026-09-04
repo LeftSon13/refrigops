@@ -1,7 +1,7 @@
 package dev.joaov.refrigops.controller;
 
 import dev.joaov.refrigops.controller.dto.CreateEquipmentRequest;
-import dev.joaov.refrigops.domain.equipment.Equipment;
+import dev.joaov.refrigops.controller.dto.EquipmentResponse;
 import dev.joaov.refrigops.service.EquipmentService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,17 +23,21 @@ public class EquipmentController {
     }
 
     @GetMapping
-    public List<Equipment> findAll() {
-        return equipmentService.findAll();
+    public List<EquipmentResponse> findAll() {
+        return equipmentService.findAll().stream()
+                .map(EquipmentResponse::from)
+                .toList();
     }
 
     @PostMapping
-    public Equipment create(@Valid @RequestBody CreateEquipmentRequest request) {
-        return equipmentService.create(
-                request.code(),
-                request.name(),
-                request.type(),
-                request.location()
+    public EquipmentResponse create(@Valid @RequestBody CreateEquipmentRequest request) {
+        return EquipmentResponse.from(
+                equipmentService.create(
+                        request.code(),
+                        request.name(),
+                        request.type(),
+                        request.location()
+                )
         );
     }
 }
