@@ -1,7 +1,3 @@
-> Nota editorial de saneamento histórico: referências a uma operação específica foram abstraídas. Esta nota não representa uma decisão tomada na data original do documento.
-
-> Exemplos JSON substituídos editorialmente por dados fictícios DEMO, sem correspondência com uma instalação real.
-
 # Contrato atual da API
 
 > Estado confirmado no código em 2026-09-03. Este documento descreve o comportamento atual, inclusive dívidas conhecidas; não significa que todo o contrato esteja aprovado como definitivo.
@@ -24,7 +20,7 @@ GET /api/equipment
 
 HTTP 200 com array de `EquipmentResponse`.
 
-Exemplo inferido do modelo:
+Exemplo fictício inferido do modelo:
 
 ```json
 [

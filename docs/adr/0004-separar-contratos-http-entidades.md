@@ -1,15 +1,15 @@
 # ADR-0004 — Separar contratos HTTP das entidades
 
-- Status: Proposta
-- Próxima Issue recomendada: Desacoplar respostas da API da entidade Equipment
+- Status: Aceita
+- Implementada pela Issue #8 e integrada pela PR #9 em `c8a2802`
 
 ## Contexto
 
-`EquipmentController` retorna atualmente `Equipment` e `List<Equipment>`. A entidade JPA define, por consequência, o JSON público.
+Antes da Issue #8, `EquipmentController` retornava `Equipment` e `List<Equipment>`. A entidade JPA definia, por consequência, o JSON público.
 
 Isso permite que uma mudança de persistência altere o contrato HTTP sem decisão explícita.
 
-## Decisão proposta
+## Decisão
 
 Criar `EquipmentResponse` e mapear:
 
@@ -19,7 +19,7 @@ Equipment → EquipmentResponse → JSON
 
 Manter `CreateEquipmentRequest` como contrato de entrada.
 
-## Campos candidatos
+## Campos públicos adotados
 
 ```text
 id
@@ -31,7 +31,7 @@ active
 location
 ```
 
-A inclusão de cada campo deve ser decidida antes da implementação.
+Esses campos foram preservados no contrato de criação e listagem coberto pelos testes do Controller.
 
 ## Consequências positivas
 
@@ -54,6 +54,10 @@ A inclusão de cada campo deve ser decidida antes da implementação.
 - alterar a entidade ou migration;
 - criar front-end.
 
-## Critério de aceitação da ADR
+## Evidência de adoção
 
-Revisar o código atual, escolher campos públicos, implementar via Issue e marcar a ADR como aceita após merge.
+- `EquipmentResponse` representa a resposta pública;
+- `EquipmentResponse.from(Equipment)` realiza o mapeamento explícito na fronteira HTTP;
+- GET e POST retornam DTO, não a entidade JPA;
+- Service e Repository permanecem independentes dos DTOs HTTP;
+- a PR #9 foi merged em 2026-09-07 no commit `c8a2802`.

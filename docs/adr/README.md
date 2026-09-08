@@ -17,4 +17,4 @@ ADRs registram decisões relevantes, seu contexto, alternativas e consequências
 - [ADR-0004 — Separar contratos HTTP das entidades](0004-separar-contratos-http-entidades.md)
 - [ADR-0005 — Tratar medições com valor, unidade e origem](0005-medicoes-com-contexto.md)
 
-As ADRs 0001–0003 descrevem decisões já presentes no histórico/código. A ADR-0004 é proposta para a próxima Issue. A ADR-0005 é uma decisão de modelagem documental para módulos futuros.
+As ADRs 0001–0004 descrevem decisões já presentes no histórico ou no código. A ADR-0004 foi aceita após a integração de `EquipmentResponse` pela PR #9. A ADR-0005 é uma decisão de modelagem documental para módulos futuros.

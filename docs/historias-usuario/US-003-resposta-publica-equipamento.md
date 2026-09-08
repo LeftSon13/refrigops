@@ -1,6 +1,6 @@
 # US-003 — Receber representação pública de equipamento
 
-- Estado: implementada na branch `feature/equipment-response`, aguardando revisão
+- Estado: implementada e integrada à `main` pela PR #9 em `c8a2802`
 - Issue: #8 — Desacoplar respostas da API da entidade Equipment
 
 ## História

@@ -1,12 +1,8 @@
-> Nota editorial de saneamento histórico: referências a uma operação específica foram abstraídas. Esta nota não representa uma decisão tomada na data original do documento.
-
-> Exemplos JSON substituídos editorialmente por dados fictícios DEMO, sem correspondência com uma instalação real.
-
 # Arquitetura atual
 
 ## 1. Escopo e data do snapshot técnico
 
-**[CONFIRMADO — REPOSITÓRIO]** Auditada no checkout local em 2026-08-29:
+**[CONFIRMADO — REPOSITÓRIO E GITHUB]** Revalidada em 2026-09-07:
 
 ```text
 diretório raiz do repositório `refrigops`
@@ -16,12 +12,10 @@ Branch e commit:
 
 ```text
 main
-938480a Merge pull request #5 from LeftSon13/feature/equipment-validation
+c8a2802 Merge pull request #9 from LeftSon13/feature/equipment-response
 ```
 
-A árvore de trabalho estava limpa e `main` acompanhava `origin/main`.
-
-Esse bloco é o snapshot da aplicação que serve de base à documentação, não o estado volátil da branch documental. Em 2026-09-03, o código foi confrontado novamente na branch `docs/documentacao-operacional`; ela permanecia baseada em `938480a` e não continha alterações em `src/`, `pom.xml`, `compose.yaml` ou configurações da aplicação. O estado mais recente da branch e das validações fica em [`11-contexto-atual.md`](11-contexto-atual.md).
+O `HEAD` local e `refs/heads/main` no remoto apontavam para o mesmo commit. A PR #9 integrou `EquipmentResponse` sem alterar entidade, Service, Repository ou schema. O estado mais recente da branch e das validações fica em [`11-contexto-atual.md`](11-contexto-atual.md).
 
 ## 2. Stack confirmada
 
@@ -49,7 +43,9 @@ src/main/java/dev/joaov/refrigops/
 ├── RefrigopsApplication.java
 ├── controller/
 │   ├── EquipmentController.java
-│   └── dto/CreateEquipmentRequest.java
+│   └── dto/
+│       ├── CreateEquipmentRequest.java
+│       └── EquipmentResponse.java
 ├── domain/equipment/
 │   ├── Equipment.java
 │   ├── EquipmentRepository.java
@@ -91,6 +87,10 @@ active = true
 EquipmentRepository.save(...)
         ↓
 PostgreSQL
+        ↓
+EquipmentResponse.from(Equipment)
+        ↓
+JSON público
 ```
 
 Entrada JSON confirmada:
@@ -118,17 +118,25 @@ EquipmentService.findAll()
 EquipmentRepository.findAll()
         ↓
 List<Equipment>
+        ↓
+EquipmentResponse.from(Equipment)
+        ↓
+List<EquipmentResponse>
 ```
 
 ## 6. Camadas e responsabilidades atuais
 
 ### Controller
 
-Recebe HTTP, desserializa o DTO, dispara a validação e chama o Service.
+Recebe HTTP, desserializa o DTO, dispara a validação, chama o Service e converte a entidade retornada para o contrato público.
 
 ### DTO de entrada
 
 `CreateEquipmentRequest` representa os dados aceitos na criação e contém validações de presença.
+
+### DTO de saída
+
+`EquipmentResponse` representa os campos públicos retornados por GET e POST. O método `from(Equipment)` mantém o mapeamento explícito na fronteira HTTP.
 
 ### Service
 
@@ -136,7 +144,7 @@ Constrói a entidade, aplica padrões iniciais e delega a persistência.
 
 ### Domain/Entity
 
-`Equipment` é simultaneamente a representação persistida e o objeto retornado pelo Service/Controller.
+`Equipment` é a representação persistida e o objeto retornado pelo Service. O Controller não expõe diretamente a entidade no contrato HTTP.
 
 ### Repository
 
@@ -196,16 +204,16 @@ Isso evita que os testes usem o banco de desenvolvimento em `localhost:5433`.
 
 ## 10. Dívidas e limites confirmados
 
-### Entidade exposta pela API
+### Separação entre persistência e API
 
 O Controller retorna:
 
 ```java
-Equipment
-List<Equipment>
+EquipmentResponse
+List<EquipmentResponse>
 ```
 
-Isso acopla contrato HTTP e persistência. A próxima Issue recomendada é criar um DTO de resposta.
+Essa fronteira foi adotada pela ADR-0004 e integrada pela PR #9. O mapeamento permanece manual e pequeno; não há necessidade comprovada de framework de mapeamento.
 
 ### Status HTTP de criação
 

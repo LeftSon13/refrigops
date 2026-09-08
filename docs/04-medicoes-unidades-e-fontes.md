@@ -1,109 +1,163 @@
 # Medições, unidades e fontes
 
-> Nota editorial de saneamento histórico: referências a uma operação específica foram abstraídas. Esta nota não representa uma decisão tomada na data original do documento.
-
 ## 1. Objetivo
 
-Impedir que números de origens e unidades diferentes sejam comparados ou apresentados como equivalentes sem contexto.
+Definir princípios públicos e genéricos para representar medições no RefrigOps sem reproduzir instrumentos, telas, valores ou procedimentos de uma instalação real.
 
 ## 2. Regra central
 
-**[DECISÃO]** Toda medição futura deve preservar, quando aplicável:
-
-- valor original;
-- unidade original;
-- fonte;
-- instrumento ou tag;
-- instante da medição;
-- instante do registro;
-- responsável pelo registro;
-- conversão aplicada;
-- método e versão de cálculo;
-- qualidade, observação ou incerteza.
-
-## 3. Fontes e rastreabilidade
-
-Distinguir instrumento local, interface de equipamento, importação e cálculo. Um mapeamento entre rótulo de origem e conceito de domínio exige validação; nenhuma associação com ativo, fabricante ou instalação é mantida nesta síntese.
-
-## 4. Pressão e temperatura
-
-Valores de grandezas diferentes não são intercambiáveis. Não inferir medição independente a partir de uma indicação convertida sem verificar sua origem e o método utilizado.
-
-## 5. Escala de NH₃ do manômetro
-
-**[DECISÃO DE INTERPRETAÇÃO]** A escala em °C do manômetro não representa um segundo sensor. Ela converte a pressão medida para temperatura de saturação correspondente à NH₃.
+Um número isolado não é uma medição suficientemente rastreável.
 
 ```text
-pressão medida
-     ├── escala de pressão
-     └── escala equivalente de temperatura NH3
+medição = valor + unidade + origem + ponto + instante + autoria + qualidade
 ```
 
-Logo, pressão e temperatura lidas do mesmo ponteiro não são duas observações independentes para validar uma condição termodinâmica.
+Quando houver conversão ou cálculo, devem permanecer disponíveis também as entradas, a regra e sua versão.
 
-## 6. Unidades
+## 3. Fontes genéricas
 
-Registrar unidade original e convenção adotada. Conversões precisam de método explícito, rastreabilidade e validação técnica. Esta síntese não fornece valores operacionais nem recomendações de ajuste.
+Uma coleta pode declarar uma origem conceitual:
 
-## 7. Pressão manométrica e absoluta
+| Origem | Significado público |
+|---|---|
+| Instrumento local | Valor digitado após leitura presencial de um instrumento |
+| Interface local | Valor digitado após leitura de uma interface |
+| Importação autorizada | Valor recebido de fonte integrada e identificada |
+| Cálculo | Valor derivado por regra registrada |
 
-**[PENDENTE CRÍTICO]** Confirmar se cada fonte representa:
+Na MVP, todas as origens são simuladas. Não existe conexão com sensores, controladores ou redes industriais.
 
-- pressão manométrica, relativa à atmosfera;
-- pressão absoluta;
-- outra convenção interna do sistema.
+## 4. Cenário sintético
 
-Comparações termodinâmicas podem exigir pressão absoluta. O software não deve assumir conversão sem conhecer altitude/pressão atmosférica, convenção da tabela e instrumento.
-
-## 8. Limites de cálculos
-
-Fórmulas e exemplos associados à operação específica foram suprimidos. Uma estimativa não comprova composição nem substitui medição certificada.
-
-## 9. Qualidade da evidência
-
-Uma indicação derivada de outra grandeza não constitui evidência independente. Qualquer inferência exige validação das fontes e premissas; não há procedimento operacional prescrito aqui.
-
-## 10. Não condensáveis — hipótese física
-
-**[HIPÓTESE TÉCNICA]** Diferenças entre pressão real do lado de alta e pressão de saturação esperada para uma temperatura independentemente medida podem indicar condição que merece investigação.
-
-Isso depende de:
-
-- ponto e instante das medições;
-- equilíbrio térmico;
-- representatividade da temperatura;
-- unidades e convenção de pressão;
-- composição;
-- erro dos instrumentos;
-- condição operacional;
-- procedimento técnico adotado.
-
-Não converter essa hipótese em regra operacional sem validação especializada.
-
-## 11. Proposta de representação de uma medição
-
-Campos candidatos do modelo, sem instâncias operacionais: `rawValue`, `rawUnit`, `normalizedValue`, `normalizedUnit`, `origin`, `measuredAt`, `recordedAt`, `instrument`, `sourceReference`, `qualityStatus`, `calculationMethod` e `notes`. Os nomes não constituem contrato implementado ou aprovado.
-
-## 12. Estados de qualidade possíveis
-
-**[HIPÓTESE]**
+Exemplo exclusivamente demonstrativo:
 
 ```text
-OBSERVED
-UNVERIFIED
-SUSPECT
+equipamento: DEMO-COMP-01
+ponto: PRESSAO_DEMO_01
+valor: 12,34
+unidade: unidade_demo
+origem: MANUAL_LOCAL_INSTRUMENT
+autor: Operador A
+qualidade: INFORMADO_PARA_DEMONSTRACAO
+```
+
+O valor e a unidade não representam leitura, limite seguro, setpoint ou faixa operacional. Servem somente para testar persistência, exibição e rastreabilidade.
+
+## 5. Ausência não é zero
+
+Resultados possíveis precisam permanecer semanticamente distintos:
+
+```text
+MEASURED
+NOT_APPLICABLE
+EQUIPMENT_UNAVAILABLE
+COULD_NOT_MEASURE
+NOT_PERFORMED
+```
+
+- `MEASURED` exige valor e contexto;
+- ausência justificada não recebe valor numérico;
+- zero só é válido quando digitado intencionalmente;
+- estado cadastral do equipamento não substitui o resultado da coleta.
+
+Os nomes definitivos serão refinados na Issue técnica correspondente.
+
+## 6. Unidades e conversões
+
+O sistema deve:
+
+- preservar a unidade informada;
+- impedir comparação silenciosa de unidades incompatíveis;
+- registrar unidade normalizada quando houver conversão;
+- versionar a regra usada;
+- exibir arredondamento e precisão de maneira consistente;
+- não assumir unidade com base apenas no nome de uma tela ou campo.
+
+Pressão absoluta e pressão manométrica são referências diferentes. Qualquer comparação depende de identificar explicitamente qual convenção foi usada.
+
+## 7. Temperatura e grandezas derivadas
+
+Uma escala derivada não constitui necessariamente uma segunda medição independente. O modelo deve distinguir:
+
+- valor fisicamente medido;
+- valor convertido;
+- valor calculado;
+- valor estimado;
+- valor apenas informado por fonte externa.
+
+Essa distinção evita apresentar transformação matemática como observação independente.
+
+## 8. Qualidade e incerteza
+
+Estados candidatos de qualidade:
+
+```text
+RAW
+VALIDATED
 ESTIMATED
+CONVERTED
 CALCULATED
-INVALIDATED
+QUESTIONABLE
+REJECTED
 ```
 
-Os nomes precisam ser traduzidos para a linguagem da operação e definidos antes do uso.
+Eles são vocabulário de análise, não implementação aprovada. A interface deve explicar seu significado antes de adotá-los.
 
-## 13. Perguntas pendentes
+## 9. Correção e histórico
 
-Qual é a grandeza? Qual unidade e convenção foram usadas? A indicação foi medida, digitada, importada ou calculada? Qual método e qual fonte autorizada sustentam a interpretação? Essas perguntas não são respostas sobre uma instalação.
+Uma correção deve:
 
-## 14. Síntese editorial
+- preservar o registro original;
+- identificar autor e horário;
+- exigir motivo;
+- criar nova revisão;
+- deixar inequívoco qual valor está vigente.
 
-Referências, classificações e associações operacionais específicas foram retiradas. Preservam-se somente distinções conceituais e a necessidade de validação técnica.
+Não se deve editar silenciosamente uma medição histórica.
 
+## 10. Não condensáveis
+
+A MVP não calcula percentual de gases não condensáveis.
+
+Pressão, temperatura, composição, equilíbrio e ponto de coleta precisam de definição técnica antes de qualquer método. O software não deve converter uma diferença numérica em diagnóstico, limite seguro ou recomendação operacional sem validação de profissionais responsáveis.
+
+## 11. Modelo candidato
+
+```text
+MeasurementPoint
+├── id
+├── equipmentId
+├── name
+├── quantityType
+├── expectedUnit
+├── originType
+└── active
+
+MeasurementResult
+├── measurementPointId
+├── rawValue ou absenceReason
+├── rawUnit
+├── origin
+├── measuredAt
+├── recordedAt
+├── recordedBy
+├── quality
+└── revision
+```
+
+Valor e ausência são mutuamente exclusivos. Precisão, escala, invariantes e snapshots serão refinados em T-05 e na ADR-0005.
+
+## 12. Validação privada necessária
+
+Antes de um piloto real, profissionais autorizados devem validar:
+
+- nome e significado de cada ponto;
+- grandeza e unidade oficiais;
+- referência absoluta ou manométrica, quando aplicável;
+- origem e método de obtenção;
+- localização e representatividade do instrumento;
+- calibração e rastreabilidade;
+- arredondamento e precisão;
+- permissões, retenção e finalidade do dado.
+
+Essas informações não são publicadas nem inferidas do cenário fictício.

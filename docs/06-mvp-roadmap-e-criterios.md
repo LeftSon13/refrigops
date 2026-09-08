@@ -19,11 +19,12 @@ Entregue:
 - padrões `STOPPED` e `active = true` na criação;
 - isolamento de testes com Testcontainers;
 - Bean Validation no POST;
+- contrato público de saída com `EquipmentResponse`;
+- conteúdo JSON de criação e listagem coberto por testes;
 - fluxo Git com Issues, branches, PRs e review.
 
 Ainda não entregue:
 
-- contrato de resposta separado;
 - operações completas de equipamento;
 - autenticação;
 - interface de usuário;

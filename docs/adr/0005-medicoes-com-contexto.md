@@ -4,7 +4,7 @@
 
 ## Contexto
 
-A investigação operacional revelou dados em bar e kgf/cm², escalas derivadas de temperatura, instrumentos locais, IHM, PT100 e valores calculados. Um número isolado não permite comparação confiável.
+No domínio industrial, valores podem usar unidades, referências e origens diferentes ou resultar de conversões e cálculos. Um número isolado não permite comparação confiável. A documentação pública não associa esse princípio a instrumentos, telas ou valores de uma instalação específica.
 
 ## Decisão proposta
 
@@ -43,4 +43,4 @@ Quando o módulo de leituras for criado, a medição deve preservar ao menos:
 
 ## Validação necessária
 
-Observar o primeiro fluxo de ronda, inventariar medições e testar se o contexto pode ser capturado sem aumentar excessivamente o trabalho do operador.
+Testar o fluxo fictício da primeira ronda e verificar se o contexto pode ser capturado sem aumentar excessivamente o trabalho do operador. Qualquer inventário real exige validação privada e autorizada.

@@ -1,13 +1,13 @@
 # Pesquisa e evidências
 
-Esta pasta deve guardar registros de descoberta, referências e validações, sem misturar relato operacional com fonte técnica pública.
+Esta pasta guarda somente sínteses públicas de descoberta, referências públicas e validações que não permitam caracterizar uma instalação.
+
+Materiais brutos de descoberta operacional são privados e não entram no repositório. A experiência profissional é convertida em aprendizado abstrato antes de ser documentada publicamente.
 
 ## Tipos de evidência
 
 ```text
-OBSERVAÇÃO OPERACIONAL
-ENTREVISTA/RELATO
-ARQUIVO OU FORMULÁRIO EXISTENTE
+SÍNTESE PÚBLICA ABSTRATA
 FONTE TÉCNICA
 EVIDÊNCIA DO REPOSITÓRIO
 TESTE DE USABILIDADE
@@ -19,10 +19,10 @@ DECISÃO APROVADA
 ```markdown
 # Evidência — título
 
-- Data:
+- Data, quando necessária:
 - Tipo:
 - Responsável pelo registro:
-- Fonte:
+- Fonte pública ou classificação abstrata:
 - Sensibilidade/restrição:
 
 ## O que foi observado
@@ -41,22 +41,22 @@ DECISÃO APROVADA
 ## Cuidados
 
 - não incluir nomes ou dados pessoais desnecessários;
-- não registrar fotos, diagramas, tags ou detalhes industriais sem autorização;
+- não versionar fotos, diagramas, tags, inventários, valores ou detalhes de instalações;
 - não copiar material protegido integralmente;
 - registrar link, título e data de consulta para fontes públicas;
 - distinguir experiência local de regra universal;
 - não transformar observação isolada em requisito.
+- não associar fabricante ou produto público a equipamento, configuração ou ocorrência local;
+- usar somente dados sintéticos identificados com `DEMO-` nos exemplos.
 
 ## Primeiras pesquisas recomendadas
 
-1. reconstrução de uma ronda real;
-2. inventário de instrumentos, unidades e pontos;
-3. origem da tabela pressão × temperatura de NH₃;
-4. procedimento oficial relacionado a não condensáveis;
-5. passagem de turno;
-6. usabilidade móvel e conectividade;
-7. classificação dos dados e permissões para portfólio público.
+1. validar o fluxo fictício de uma ronda;
+2. revisar modelagem genérica de unidade, origem e ponto;
+3. consultar fontes técnicas públicas sem inferir configuração local;
+4. testar usabilidade móvel com dados sintéticos;
+5. revisar classificação e permissão antes de publicar novas evidências.
 
-## Evidências registradas
+## Sínteses públicas
 
-Materiais específicos de descoberta operacional foram retirados deste índice histórico. Seus aprendizados publicáveis foram consolidados posteriormente em sínteses abstratas, sem preservar nomes, caminhos ou links privados.
+- [Aprendizados abstratos da descoberta operacional](aprendizados-abstratos-descoberta-operacional.md)
