@@ -49,6 +49,12 @@ Antes de alterar arquivos:
 
 ## Segurança industrial
 
+- antes de preparar conteúdo para commit ou publicação, ler e aplicar
+  `docs/13-seguranca-informacao-e-publicacao.md`;
+- não presumir autorização de publicação pelo simples acesso a conversas,
+  arquivos locais ou materiais de descoberta;
+- classificar informações, considerar correlações e usar somente exemplos
+  fictícios identificados com `DEMO-*`;
 - o RefrigOps é sistema de apoio, não sistema de controle ou segurança;
 - não comandar equipamentos, válvulas, compressores ou purgadores;
 - não inventar limites seguros, alarmes, procedimentos ou fórmulas;

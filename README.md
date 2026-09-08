@@ -141,6 +141,7 @@ Os testes integrados criam um PostgreSQL temporário com Testcontainers. Eles n�
 - [Contrato atual da API](docs/09-contrato-api-atual.md)
 - [Contexto atual](docs/11-contexto-atual.md)
 - [Guia de revisão e lacunas](docs/12-guia-revisao-e-lacunas.md)
+- [Segurança da informação e publicação](docs/13-seguranca-informacao-e-publicacao.md)
 - [Decisões arquiteturais](docs/adr/README.md)
 - [Histórias de usuário](docs/historias-usuario/README.md)
 - [Registro de evidências e pesquisa](docs/pesquisa/README.md)
@@ -156,10 +157,12 @@ Antes de agir:
 1. leia `AGENTS.md` por inteiro;
 2. leia este `README.md`;
 3. leia `docs/11-contexto-atual.md`;
-4. abra somente os documentos relacionados à tarefa;
-5. inspecione o repositório real;
-6. separe evidência atual de memória histórica;
-7. apresente diagnóstico e plano antes de alterações.
+4. antes de publicar conteúdo, consulte
+   `docs/13-seguranca-informacao-e-publicacao.md`;
+5. abra somente os documentos relacionados à tarefa;
+6. inspecione o repositório real;
+7. separe evidência atual de memória histórica;
+8. apresente diagnóstico e plano antes de alterações.
 
 ## Estado deste pacote
 
