@@ -1,24 +1,36 @@
 # Regras de negócio e domínio
 
-## 1. Escopo
+## 1. Escopo e fronteira pública
 
 Este documento separa:
 
 - comportamento confirmado no código;
-- decisões de modelagem;
-- hipóteses de domínio;
-- regras que ainda exigem validação operacional.
-> Nota editorial de saneamento histórico: referências a uma operação específica foram abstraídas. Esta nota não representa uma decisão tomada na data original do documento.
+- decisões aprovadas da MVP;
+- propostas de modelagem;
+- validações necessárias antes de um piloto real.
 
-## 2. Glossário provisório
+O conteúdo operacional é abstrato. Exemplos concretos pertencem ao cenário fictício `DEMO` e não representam ativos, pessoas, horários, instrumentos ou procedimentos de uma instalação.
 
-Equipamento, ronda, leitura e ocorrência são conceitos de modelagem distintos; suas regras exigem validação.
+## 2. Glossário público
 
-## 3. Agregado atual: Equipment
+| Termo | Significado atual | Evidência |
+|---|---|---|
+| Equipamento | Objeto cadastrado no RefrigOps | Código atual |
+| Compressor | Tipo de equipamento | Enum atual |
+| Recipiente / `RECEIVER` | Tipo de equipamento | Enum atual |
+| Condensador / `CONDENSER` | Tipo de equipamento | Enum atual |
+| Ronda | Execução manual de um roteiro configurado | Baseline da MVP |
+| Ponto de medição | Definição do que pode ser coletado | Baseline da MVP |
+| Medição | Valor registrado com unidade, origem, horário e autoria | ADR-0005 e baseline |
+| Ausência | Resultado explícito sem valor numérico | Baseline da MVP |
+| Ocorrência | Registro separado de uma leitura | Baseline da MVP |
+| Continuidade | Visão de rondas e ocorrências relevantes entre turnos | Baseline da MVP |
+
+## 3. Agregado atual: `Equipment`
 
 **[CONFIRMADO — REPOSITÓRIO]**
 
-Campos:
+Campos atuais:
 
 ```text
 id
@@ -30,15 +42,13 @@ active
 location
 ```
 
-### Identidade
+### 3.1 Identidade
 
 - `id` é gerado pelo banco;
 - `code` é obrigatório e único no banco;
-- ainda não existe validação de formato do código no Java.
+- normalização e respostas para conflito pertencem às Issues específicas do backlog.
 
-### Tipo
-
-Valores confirmados:
+### 3.2 Tipos
 
 ```text
 COMPRESSOR
@@ -46,9 +56,7 @@ RECEIVER
 CONDENSER
 ```
 
-### Estado
-
-Valores confirmados:
+### 3.3 Estados atuais
 
 ```text
 RUNNING
@@ -58,19 +66,19 @@ EVACUATED
 DEACTIVATED
 ```
 
-**[PENDENTE]** Esses estados foram modelados, mas ainda não existe definição formal de:
+Esses valores existem no código, mas sua presença não comprova um fluxo operacional aprovado. Significados, permissões, transições e histórico de estado ainda exigem decisão própria.
 
-- significado de cada um;
-- quem pode alterá-los;
-- transições permitidas;
-- diferença entre `DEACTIVATED` e `active = false`;
-- aplicação de `EVACUATED` somente a recipientes ou a qualquer equipamento;
-- registro do histórico de estado.
-- critérios gerais de entrada e saída de manutenção e possibilidade de retorno à operação.
+### 3.4 Cadastro, condição e coleta
 
-### Ativo no cadastro × estado operacional
+O modelo deve evitar misturar três dimensões:
 
-Proposta abstrata: distinguir participação no cadastro, estado operacional e atribuição de serviço, sem estabelecer estados de equipamentos reais.
+```text
+active           → disponibilidade cadastral
+operatingStatus  → condição observada em determinado contexto
+collectionStatus → resultado da tentativa de coleta
+```
+
+Os nomes de campos futuros são ilustrativos. O princípio é separar cadastro, observação e resultado de coleta.
 
 ## 4. Regras confirmadas na criação
 
@@ -89,200 +97,130 @@ Ao criar equipamento:
 
 ## 5. Regras ainda não implementadas
 
-**[PENDENTE]**
+Conforme o backlog da MVP:
 
-- normalização de espaços;
-- tamanho máximo validado na API;
-- formato de `code`;
-- tratamento amigável de código duplicado;
-- alteração de dados cadastrais;
-- desativação sem apagar histórico;
-- busca por código;
-- paginação e ordenação;
-- estados e transições;
-- auditoria de alterações;
-- associação a sala/local estruturado.
+- validação de tamanhos máximos na fronteira HTTP;
+- normalização de espaços externos;
+- tratamento padronizado de erro e conflito;
+- transição aprovada de estado;
+- autenticação e autorização;
+- perfis de turno e identidades de operador;
+- roteiro, rondas e pontos de medição;
+- medições, ausências e condições observadas;
+- ocorrências, acompanhamento, resolução e revisões;
+- histórico funcional e backup da demonstração.
+
+Planejamento documental não equivale a comportamento entregue.
 
 ## 6. Localização
 
 **[CONFIRMADO — REPOSITÓRIO]** `location` é texto livre.
 
-**[HIPÓTESE]** A localização pode evoluir para entidade ou value object quando houver regras próprias ou necessidade de normalização.
+No cenário público, use somente `Área Demonstrativa A`. Uma estrutura de áreas reais dependeria de requisitos autorizados e não deve ser inferida da demonstração.
 
-## 7. Ronda — modelo provisório
+## 7. Ronda e contexto congelado
 
-**[HIPÓTESE]** Um modelo inicial pode conter:
+A MVP diferencia:
 
-```text
-Round
-├── id
-├── area/location
-├── scheduledAt
-├── startedAt
-├── finishedAt
-├── operator
-├── status
-├── entries
-└── notes
-```
+- configuração reutilizável do perfil de turno;
+- ocorrência concreta de um turno;
+- roteiro configurado;
+- execução de ronda assumida por um operador;
+- itens de coleta preservados no contexto da execução.
 
-Possíveis estados:
+Horários e metas configurados posteriormente não devem reescrever uma execução já existente. A decisão estrutural detalhada pertence à sessão T-02 e à Issue arquitetural correspondente.
+
+Instantes conceitualmente distintos:
 
 ```text
-PLANNED → IN_PROGRESS → COMPLETED
-                    └→ INTERRUPTED
+scheduledAt → instante previsto
+measuredAt  → instante informado para a observação
+recordedAt  → instante em que o sistema confirmou o registro
 ```
 
-Nenhum desses nomes ou fluxos está aprovado.
-```text
-scheduledAt → horário previsto na grade
-measuredAt  → horário real da observação
-recordedAt  → horário em que o dado entrou no sistema
-```
+Esses campos não autorizam inferir horários ou frequência de uma operação real.
 
-A distinção de horários é uma proposta de modelagem, sem reproduzir uma grade operacional.
+## 8. Medição e ausência
 
-Perguntas obrigatórias antes de implementar:
-
-- a ronda é definida por sala, roteiro, turno ou horário?
-- pode haver mais de um operador?
-- uma ronda pode ser concluída parcialmente?
-- quem pode corrigir uma leitura?
-- como funciona atraso ou impossibilidade de acesso?
-- existe assinatura ou conferência?
-- o que é obrigatório e o que é opcional?
-
-## 8. Leitura — modelo provisório
-
-**[DECISÃO DE MODELAGEM PROPOSTA]** Nunca armazenar apenas um número quando sua interpretação depende de contexto.
-
-Uma leitura futura pode precisar de:
+Uma medição não deve ser armazenada como número sem contexto. O modelo candidato inclui:
 
 ```text
 Measurement
-├── id
-├── equipmentId / measurementPointId
+├── measurementPointId
+├── rawValue
+├── rawUnit
+├── origin
 ├── measuredAt
 ├── recordedAt
 ├── recordedBy
-├── rawValue
-├── rawUnit
-├── normalizedValue
-├── normalizedUnit
-├── origin
-├── instrument
 ├── quality/status
-├── calculationMethod/version
-└── notes
+└── calculationMethod/version, quando houver
 ```
 
-Origens possíveis, ainda não aprovadas:
+Regras preservadas da MVP:
+
+- medição possui valor; ausência não possui valor artificial;
+- zero precisa ter sido informado intencionalmente;
+- unidade e origem permanecem visíveis;
+- ponto não aplicável é diferente de coleta não realizada;
+- correção cria revisão e preserva o original;
+- valores da demonstração são sintéticos.
+
+Precisão, escala decimal, exclusividade entre valor e ausência, snapshots e fronteira de revisão serão refinados em T-05.
+
+## 9. Fontes de dados
+
+Origens genéricas podem ser representadas como:
 
 ```text
 MANUAL_LOCAL_INSTRUMENT
-MANUAL_HMI
-SENSOR_IMPORT
+MANUAL_LOCAL_INTERFACE
+AUTHORIZED_IMPORT
 CALCULATED
-LEGACY_FORM
 ```
 
-Motivos candidatos de ausência de leitura, ainda sujeitos a validação:
+Na demonstração, essas origens são apenas rótulos simulados. Não existe sensor, controlador ou integração industrial conectada.
 
-```text
-MEASURED
-EQUIPMENT_STOPPED
-NOT_APPLICABLE
-COULD_NOT_MEASURE
-NOT_PERFORMED
-RECORDED_LATE
-```
+Um valor calculado deve manter entradas, regra e versão. Um valor convertido deve preservar também o valor e a unidade originais.
 
-Os nomes e transições precisam ser traduzidos e validados. O requisito é semântico: compressor desligado e leitura não realizada não podem continuar indistinguíveis.
-### Setpoint
-**[PENDENTE]** Identificar:
+## 10. Ocorrências e continuidade
 
-- variável controlada;
-- unidade;
-- origem do valor;
-- quem pode alterá-lo;
-- validade temporal;
-- se é configuração fixa ou muda com o regime operacional.
+Medição, condição observada, ocorrência e atividade não são o mesmo conceito.
 
-**[DECISÃO DE MODELAGEM PROPOSTA]** Setpoint é referência/configuração, não leitura do operador. Se puder mudar, deve ter período de vigência para permitir interpretar corretamente o histórico.
-**[DECISÃO DE MODELAGEM PROPOSTA]** Uma futura ronda não deve usar uma lista rígida e idêntica de campos para todos os compressores. Cada equipamento poderá referenciar um perfil de coleta com pontos aplicáveis, rótulo usado pelo operador, sigla bruta da IHM e unidade esperada.
+Uma ocorrência deve possuir identidade e histórico próprios. Acompanhamento ou resolução acrescenta um evento com autoria e horário; não sobrescreve silenciosamente o registro original.
 
-O mapeamento entre sigla bruta e conceito canônico só poderá ser considerado válido depois de confirmação por manual, documentação técnica autorizada ou profissional experiente.
-
-Campos futuros candidatos no cadastro, ainda não aprovados:
-
-```text
-manufacturer
-controllerFamily
-applicationOrService
-compressionStageOrRegime
-hasVariableFrequencyDrive
-measurementProfile
-```
-
-### Atribuições e vigência
-
-Conceitos candidatos, ainda não aprovados:
-
-```text
-OperatingRegime
-EquipmentRegimeAssignment
-validFrom / validUntil
-assignmentReason
-assignedService
-```
-
-O nome de regime, sua temperatura de referência e a atribuição do equipamento são conceitos distintos.
-## 9. Ocorrências e anomalias
-
-**[HIPÓTESE]** Uma ocorrência deve ser separada de uma leitura fora de faixa. Pode registrar observação qualitativa, severidade provisória, equipamento relacionado, horário, responsável e ação tomada.
-
-**[PENDENTE]** Antes de modelar, mapear:
-
-- categorias reais;
-- quem classifica severidade;
-- diferença entre ocorrência, alarme, defeito e ordem de manutenção;
-- integrações com processos existentes;
-- exigências de retenção e auditoria.
-**[DECISÃO DE MODELAGEM]** Medição periódica, ocorrência, atividade realizada e pendência de turno não devem ser representadas como um único tipo de registro.
-
-**[DECISÃO DE MODELAGEM]** O formulário digital de leitura não deve receber campos livres de ocorrência apenas por conveniência. A ligação entre uma leitura e uma ocorrência deve ser explícita, preservando os dois registros como conceitos separados.
-**[DECISÃO DE MODELAGEM]** Resolver uma pendência deve acrescentar um novo evento relacionado ao registro anterior e identificar o problema resolvido. O sistema deve preservar o texto e o estado históricos em vez de sobrescrever silenciosamente a anotação original.
-**[DECISÃO DE MODELAGEM]** Anotação, tarefa futura e restrição operacional não devem ser o mesmo conceito. Uma tarefa pode precisar de turno responsável, data e estado. Uma restrição pode precisar de origem, vigência e confirmação de ciência. Esses campos são candidatos de descoberta, não autorização para implementar controle de equipamento.
-## 10. Passagem de turno
-**[HIPÓTESE]** A futura passagem de turno deve ser uma visão derivada de ocorrências, equipamentos indisponíveis, rondas pendentes e observações, evitando duplicação manual. Antes de definir campos obrigatórios, é necessário validar com outros operadores e supervisão quais informações realmente precisam atravessar todos os turnos.
-**[HIPÓTESE]** Uma futura confirmação de ciência pode reduzir ambiguidade, mas não comprova execução e não substitui procedimentos ou comunicação verbal exigida.
+A continuidade entre turnos é uma projeção informativa de execuções e ocorrências. Ela não representa comando, autorização, ordem de manutenção ou confirmação de segurança.
 
 ## 11. Não condensáveis
 
-**[DECISÃO]** Não existe regra de negócio aprovada para calcular percentual real de ar.
-Qualquer feature relacionada exige:
+Não existe regra de negócio aprovada para calcular percentual real de gases não condensáveis.
+
+Qualquer funcionalidade futura exigiria, fora da MVP:
 
 - método técnico aprovado;
-- pontos de medição definidos;
-- unidades normalizadas;
-- pressão absoluta/manométrica esclarecida;
-- temperatura independente e representativa;
-- condições de equilíbrio conhecidas;
-- validação com engenharia e procedimento da planta;
-- linguagem de interface que não induza certeza falsa.
+- pontos e instrumentos definidos;
+- unidades e convenções de pressão esclarecidas;
+- temperatura independentemente medida e representativa;
+- condições físicas conhecidas;
+- validação por engenharia e procedimentos autorizados;
+- linguagem que não apresente estimativa como medição certificada.
 
 ## 12. Eventos de domínio futuros
 
-**[HIPÓTESE]** Eventos que podem se tornar relevantes:
+Nomes conceituais que podem ajudar a discutir comportamentos:
 
 ```text
 EquipmentRegistered
 EquipmentStatusChanged
 RoundStarted
 MeasurementRecorded
-AnomalyReported
+OccurrenceReported
 RoundCompleted
-ShiftHandoverAcknowledged
+ShiftContinuityViewed
 ```
 
-Não implementar event sourcing ou mensageria apenas por essa lista. Os nomes ajudam a compreender comportamentos, não prescrevem arquitetura.
+Essa lista não prescreve event sourcing, mensageria ou microsserviços.
+
+## 13. Validação privada antes de uso real
+
+Inventário, áreas, estados, pontos, unidades, instrumentos, horários, pessoas, procedimentos e permissões de uma instalação só podem ser definidos em ambiente privado e autorizado. Nada disso é derivado dos exemplos `DEMO`.

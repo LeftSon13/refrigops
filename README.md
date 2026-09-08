@@ -1,10 +1,6 @@
-> Nota editorial de saneamento histórico: referências a uma operação específica foram abstraídas. Esta nota não representa uma decisão tomada na data original do documento.
-
-> Exemplos JSON substituídos editorialmente por dados fictícios DEMO, sem correspondência com uma instalação real.
-
 # RefrigOps
 
-> Fundação documental de um sistema de apoio à refrigeração industrial.
+> Fundação documental do produto e da base técnica, construída a partir do checkout real, de evidências registradas e de aprendizados profissionais apresentados de forma abstrata.
 
 ## Aviso de confiabilidade
 
@@ -13,7 +9,7 @@ Esta documentação registra auditorias realizadas em datas específicas. Inform
 Use estas classificações ao ler ou atualizar os documentos:
 
 - **[CONFIRMADO — REPOSITÓRIO]**: verificado diretamente no checkout atual;
-- **[CONFIRMADO — CONTEXTO OPERACIONAL]**: relato do usuário sobre a operação real;
+- **[CONTEXTO PROFISSIONAL ABSTRAÍDO]**: aprendizado genérico que inspirou o produto, sem descrever uma instalação específica;
 - **[HISTÓRICO — REPOSITÓRIO]**: verificado anteriormente, mas ainda não reconfirmado;
 - **[HISTÓRICO — CONVERSA]**: recuperado das conversas;
 - **[DECISÃO]**: escolha deliberada de produto, arquitetura ou processo;
@@ -22,24 +18,24 @@ Use estas classificações ao ler ou atualizar os documentos:
 
 ## O que é o RefrigOps
 
-O RefrigOps é um projeto de sistema de apoio à operação de refrigeração industrial com amônia R717, inspirado em necessidades genéricas de registro e rastreabilidade.
+O RefrigOps é um projeto de sistema de apoio à operação de refrigeração industrial com amônia R717. A experiência profissional inspirou o problema, mas equipamentos, layout, operação, horários, pessoas, instrumentos, configurações, valores e procedimentos de instalações reais não fazem parte da documentação pública.
 
 Sua proposta não é substituir o operador nem comandar a planta. A visão é organizar o contexto operacional, criar histórico confiável e permitir uma evolução segura de registros manuais para análises e integrações futuras.
 
-## Estado histórico resumido
+## Estado atual resumido
 
-**[HISTÓRICO — REPOSITÓRIO]**
+**[CONFIRMADO — REPOSITÓRIO E GITHUB EM 2026-09-07]**
 
 - Java 21 e Spring Boot 4.0.7;
 - PostgreSQL 17, Flyway e Spring Data JPA;
 - Testcontainers com PostgreSQL temporário;
-- API inicial de equipamentos;
+- API inicial de equipamentos com `EquipmentResponse` no contrato público;
 - validação HTTP no cadastro;
-- último merge conhecido: PR #5, commit `938480a`;
-- última suíte conhecida: 5 testes passando;
-- próxima Issue recomendada, ainda não criada no último checkpoint: **Desacoplar respostas da API da entidade Equipment**.
+- último merge funcional: PR #9, commit `c8a2802`;
+- última suíte registrada: 6 testes passando;
+- baseline aprovada da MVP v0.1 incorporada pela Issue #11.
 
-Consulte [docs/11-contexto-atual.md](docs/11-contexto-atual.md) antes de qualquer trabalho.
+Consulte [docs/11-contexto-atual.md](docs/11-contexto-atual.md) e a [baseline da MVP v0.1](docs/mvp/README.md) antes de qualquer trabalho.
 
 ## Pré-requisitos atuais
 
@@ -148,6 +144,10 @@ Os testes integrados criam um PostgreSQL temporário com Testcontainers. Eles n�
 - [Decisões arquiteturais](docs/adr/README.md)
 - [Histórias de usuário](docs/historias-usuario/README.md)
 - [Registro de evidências e pesquisa](docs/pesquisa/README.md)
+- [Baseline e backlog da MVP v0.1](docs/mvp/README.md)
+- [Auditorias técnicas datadas](docs/auditorias/README.md)
+- [Documentos históricos](docs/historico/README.md)
+- [Prompts operacionais reutilizáveis](prompts/README.md)
 
 ## Para um novo assistente
 

@@ -1,18 +1,64 @@
 # Documento mestre do produto — RefrigOps
 
-> Nota editorial de saneamento histórico: referências a uma operação específica foram abstraídas. Esta nota não representa uma decisão tomada na data original do documento.
+## 1. Resumo executivo
 
-## 1. Resumo executivo histórico
+**[CONTEXTO PROFISSIONAL ABSTRAÍDO]**
 
-O RefrigOps foi concebido como sistema de apoio para organizar registros e contexto em refrigeração industrial. Esta versão histórica expressava hipóteses iniciais de produto; não descreve uma instalação, pessoa ou organização.
+O RefrigOps é uma proposta de sistema de apoio à operação de refrigeração industrial com amônia R717. A ideia foi inspirada por problemas profissionais comuns: dados podem ficar distribuídos entre registros manuais, interfaces e instrumentos locais, comunicação entre equipes e conhecimento informal.
 
-## 2. Origem abstrata da ideia
+O produto pretende criar um histórico operacional estruturado, rastreável e útil, começando por capacidades pequenas que independem de integração automática. A automação, telemetria e análise avançada são possibilidades futuras, não pré-requisitos do primeiro produto.
 
-Aprendizados profissionais motivaram problemas genéricos de rastreabilidade, fragmentação de registros e continuidade da informação. As fontes, locais, ativos, fornecedores, práticas e relatos que deram origem a esses aprendizados foram retirados editorialmente.
+## 2. Origem da ideia
 
-## 3. Problema de produto
+**[CONTEXTO PROFISSIONAL ABSTRAÍDO]**
 
-A hipótese histórica preservada é que informações distribuídas entre registros e pessoas podem perder contexto e dificultar consulta posterior. O produto buscava estruturar histórico sem transformar essa hipótese em procedimento operacional, diagnóstico ou descrição de uma operação real.
+A origem do RefrigOps não foi apenas uma necessidade acadêmica de usar Spring Boot. Experiências profissionais inspiraram o problema, mas a documentação pública registra somente conclusões abstratas e cenários sintéticos.
+
+Em refrigeração industrial podem existir diferentes áreas, equipamentos, instrumentos locais e sistemas de supervisão. Rondas podem exigir inspeção física e coleta de informações em pontos distintos.
+
+Durante uma ronda, o operador pode observar números e condições qualitativas, como:
+
+- condição de sucção e formação de gelo;
+- temperatura percebida e condições térmicas;
+- nível e temperatura de óleo;
+- condição de filtros;
+- alarmes;
+- ruídos;
+- comportamento geral da sala e dos equipamentos.
+
+Isso consolidou um princípio do produto:
+
+> A instrumentação pode ajudar o operador, mas não substitui a percepção operacional.
+
+## 3. Problema percebido
+
+**[CONTEXTO PROFISSIONAL ABSTRAÍDO]**
+
+O problema não é apenas “digitalizar uma planilha”. O cenário combina:
+
+```text
+informação no papel
+        +
+informação na IHM
+        +
+instrumentos locais
+        +
+percepção do operador
+        +
+conhecimento informal da equipe
+        +
+ocorrências e passagem de turno
+```
+
+O efeito percebido é que informações relevantes podem não se transformar em histórico estruturado, pesquisável e comparável. Isso dificulta reconstruir o que aconteceu, perceber tendências, explicar ocorrências e transmitir contexto entre turnos.
+
+Em processos de continuidade baseados em texto livre, itens com responsável ou vigência futura podem perder visibilidade. Uma demonstração fictícia pode representar autoria, acompanhamento e vigência sem afirmar como determinada instalação trabalha.
+
+Isso mostra que o problema não é somente guardar texto: informações com responsável ou validade futura precisam reaparecer no momento correto e permitir acompanhamento. Qualquer apoio digital permanece informativo e não substitui autorização, procedimento nem controle de segurança da instalação.
+
+Registros manuais podem exigir transcrição posterior, criando risco genérico de atraso, retrabalho e erro. A MVP demonstrará um fluxo digital fictício, sem documentar processos internos de uma instalação.
+
+Um histórico estruturado também pode apoiar investigações técnicas sobre o comportamento passado de um equipamento. Qualquer exemplo público dessa finalidade usará empresas, pessoas, equipamentos e datas inteiramente fictícios.
 
 ## 4. Usuários e interessados
 
@@ -157,9 +203,9 @@ Essa proposta precisa ser validada com usuários além do próprio autor do proj
 - criar microsserviços, nuvem complexa ou front-end amplo sem necessidade;
 - reproduzir integralmente formulários legados sem investigar o significado dos campos.
 
-## 10. MVP provisório
+## 10. Histórico da proposta de MVP
 
-**[HIPÓTESE]** O MVP de produto ainda não está formalmente aprovado. Uma proposta coerente com a evolução discutida seria:
+**[HISTÓRICO — DOCUMENTAÇÃO]** Antes da aprovação da baseline v0.1, uma proposta coerente com a evolução discutida era:
 
 1. cadastro e consulta de equipamentos;
 2. criação de uma ronda manual para uma área piloto;
@@ -170,7 +216,7 @@ Essa proposta precisa ser validada com usuários além do próprio autor do proj
 7. registro de ocorrência/anomalia durante a ronda;
 8. resumo útil para passagem de turno.
 
-O recorte deve ser validado com uma sala, um turno e um grupo pequeno de equipamentos antes de generalização.
+Esse recorte foi sucedido pela [baseline aprovada da MVP demonstrativa v0.1](mvp/documento-mestre-v0.1.md). A baseline específica governa o escopo atual; este trecho permanece para preservar a evolução da decisão.
 
 ## 11. Valor de portfólio e aprendizado
 
@@ -212,18 +258,15 @@ Nenhum indicador operacional ou financeiro deve ser prometido sem dados de base.
 
 O último checkpoint registrado contém uma API de equipamentos com persistência, listagem, criação e validação. O projeto usa Java 21, Spring Boot, PostgreSQL, Flyway, Testcontainers, JUnit e MockMvc.
 
-O snapshot técnico da aplicação permanece baseado no merge `938480a`. Este documento preserva o histórico; branch, testes e ambiente mais recentes devem ser consultados em [`11-contexto-atual.md`](11-contexto-atual.md).
+O snapshot técnico atual está no merge `c8a2802`, que integrou `EquipmentResponse` pela PR #9. Branch, testes e ambiente mais recentes devem ser consultados em [`11-contexto-atual.md`](11-contexto-atual.md).
 
-## 14. Próxima decisão recomendada
+## 14. Continuidade aprovada
 
-Depois da auditoria do repositório e da revisão desta documentação, a próxima Issue técnica recomendada é separar a entidade `Equipment` do DTO de resposta HTTP.
+A separação entre a entidade `Equipment` e o DTO de resposta HTTP foi implementada pela Issue #8 e integrada pela PR #9.
 
-Antes disso, o projeto deve decidir se a prioridade imediata é:
+O recorte e a ordem atuais estão definidos na [baseline da MVP](mvp/documento-mestre-v0.1.md), na [EPIC e backlog](mvp/epic-e-backlog-v0.1.md) e nas Issues publicadas sob a EPIC #10.
 
-1. consolidar a base técnica de Equipment; ou
-2. iniciar descoberta formal do primeiro fluxo de ronda.
-
-As duas linhas são válidas, mas não devem crescer simultaneamente sem prioridade explícita.
+Cada Issue deve ser executada isoladamente, respeitando dependências, revisão técnica, sessão de aprendizagem e autorização de merge antes do próximo incremento.
 
 ## 15. Critérios para considerar este documento revisado
 

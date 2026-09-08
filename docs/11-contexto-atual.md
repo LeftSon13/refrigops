@@ -1,177 +1,109 @@
-> Nota editorial de saneamento histórico: referências a uma operação específica foram abstraídas. Esta nota não representa uma decisão tomada na data original do documento.
-
 # Contexto atual
 
-> Atualizado em 2026-09-03 a partir da implementação da resposta pública de Equipment.
+> Atualizado em 2026-09-07 para a entrega documental da Issue #11 / MVP-ISSUE-001.
 
 ## Fase
 
-Implementação do contrato público `EquipmentResponse` concluída na branch `feature/equipment-response`, aguardando revisão por Pull Request.
+Incorporação da baseline aprovada da MVP demonstrativa v0.1 ao repositório. Esta entrega é exclusivamente documental e antecede qualquer nova funcionalidade da MVP.
 
-## Repositório auditado
+## Repositório e checkpoint técnico
 
-```text
-diretório raiz do repositório `refrigops`
-```
-
-Remoto:
+**[CONFIRMADO — REPOSITÓRIO E GITHUB]**
 
 ```text
-https://github.com/LeftSon13/refrigops.git
+repositório: LeftSon13/refrigops
+base: origin/main
+HEAD da base: bd63b82a19b9fba9b641fd70c06b1a3ab907de6e
+último merge do repositório: PR #71 — remoção da credencial fixa do PostgreSQL
+último merge funcional: PR #9 — EquipmentResponse
+Issue desta entrega: #11 — MVP-ISSUE-001
+branch da entrega: docs/issue-11-baseline-rebuild
 ```
 
-## Estado confirmado da branch documental
+Em 2026-09-07, a referência `origin/main` foi atualizada para `bd63b82`, merge da PR #71. A entrega da Issue #11 foi reconstruída diretamente dessa base em uma nova branch, sem incorporar a tentativa local anterior à sua ancestralidade.
 
-**[CONFIRMADO — REPOSITÓRIO]**
+## Baseline da MVP v0.1
 
-```text
-branch: docs/documentacao-operacional
-base técnica da aplicação: main em 938480a
-checkpoint documental auditado: 17502f9
-working tree clean no início da revisão final
-```
+**[DECISÃO DE PRODUTO VERSIONADA]**
 
-No início da revisão, o commit da documentação era:
+A fonte específica da MVP demonstrativa v0.1 passa a ser o [Documento Mestre da MVP](mvp/documento-mestre-v0.1.md), apoiado por:
 
-```text
-17502f9 docs: consolida contexto operacional do RefrigOps
-```
+- [EPIC e backlog](mvp/epic-e-backlog-v0.1.md);
+- [mapa de publicação no GitHub](mvp/mapa-publicacao-github-v0.1.md);
+- [EPIC #10](https://github.com/LeftSon13/refrigops/issues/10);
+- [Issue #11](https://github.com/LeftSon13/refrigops/issues/11).
 
-A comparação `main...17502f9` continha 34 arquivos e 4.743 linhas exclusivamente documentais. Não havia alterações em `src/`, `pom.xml`, `compose.yaml`, migrations ou configuração da aplicação. As correções finais desta revisão também permanecem restritas à documentação.
+O documento amplo de produto permanece útil para visão e histórico. Em caso de divergência sobre o recorte desta MVP, prevalecem a baseline aprovada, as decisões rastreadas, a Issue atual e o comportamento comprovado pelo código.
 
-## Base técnica desta entrega
+## Estado funcional confirmado
 
-**[CONFIRMADO — REPOSITÓRIO]**
+O backend implementa somente a fundação de `Equipment`:
 
-A branch `feature/equipment-response` foi criada a partir da `main` atualizada em:
-
-```text
-369a747 Merge pull request #7 from LeftSon13/docs/documentacao-operacional
-```
-
-O último incremento de código anterior a esta entrega permanece sendo `938480a`, merge da validação de equipamentos.
-
-## Implementado
-
-- entidade `Equipment`;
-- enums `EquipmentType` e `EquipmentStatus`;
-- `EquipmentRepository`;
-- `EquipmentService`;
-- `CreateEquipmentRequest`;
-- `GET /api/equipment`;
-- `POST /api/equipment`;
-- `EquipmentController` retorna `EquipmentResponse` e `List<EquipmentResponse>` nas respostas HTTP;
-- estado inicial `STOPPED`;
-- `active = true` na criação;
-- Bean Validation;
-- migration V1;
+- entidade, tipos e estados de equipamento;
+- `EquipmentRepository` e `EquipmentService`;
+- `CreateEquipmentRequest` com validações de presença;
+- `EquipmentResponse` como contrato público de saída;
+- `GET /api/equipment` e `POST /api/equipment`;
+- estado inicial `STOPPED` e `active = true`;
+- migration V1 controlada pelo Flyway;
 - PostgreSQL de desenvolvimento via Compose;
-- Testcontainers para testes Spring;
-- testes de contexto, Repository e Controller.
+- testes Spring com PostgreSQL temporário via Testcontainers.
 
-## Testes
+O Controller converte explicitamente `Equipment` em `EquipmentResponse`. Service e Repository continuam independentes dos DTOs HTTP.
 
-### Última execução verde registrada
+## Funcionalidades ainda não existentes
 
-Em 2026-08-29 foi tentada uma reconfirmação com `clean test` enquanto o Docker ainda não estava disponível.
+Não estão implementados:
 
-```text
-Tests run: 5
-Failures: 0
-Errors: 5
-BUILD FAILURE
-```
+- autenticação, perfis de turno ou identidades de operador;
+- programação, execução ou conclusão de rondas;
+- pontos de medição, leituras ou ausências justificadas;
+- ocorrências, correções, histórico funcional ou passagem de turno;
+- frontend da MVP;
+- integrações automáticas, telemetria ou controle industrial.
 
-**[CONFIRMADO — AMBIENTE]** A causa foi `Could not find a valid Docker environment` antes do carregamento dos contextos Spring. O resultado é inconclusivo sobre o código e deve ser repetido com Docker Desktop disponível. Nenhum teste foi desativado ou modificado.
+A existência desses conceitos na baseline ou no backlog representa planejamento, não comportamento entregue.
 
-Depois que o Docker Desktop foi iniciado, o mesmo comando foi executado novamente.
+## Testes e evidências
 
-**[CONFIRMADO — REPOSITÓRIO E AMBIENTE]**
-
-```text
-Tests run: 5
-Failures: 0
-Errors: 0
-Skipped: 0
-BUILD SUCCESS
-```
-
-O Testcontainers criou PostgreSQL 17 temporário, e o Flyway aplicou a migration V1. Essa é evidência histórica do checkpoint de 2026-08-29, não uma declaração automática sobre o ambiente atual.
-
-### Validação da revisão final
-
-**[CONFIRMADO — REPOSITÓRIO E AMBIENTE]** Em 2026-09-03 foi executado:
-
-```powershell
-.\mvnw.cmd clean test --batch-mode --no-transfer-progress
-```
-
-Resultado:
+A PR #9 registrou, com Java 21 e PostgreSQL temporário:
 
 ```text
-Tests run: 5
+Tests run: 6
 Failures: 0
 Errors: 0
 Skipped: 0
 BUILD SUCCESS
 ```
 
-O Testcontainers 2.0.5 usou Docker Desktop 29.6.2, iniciou PostgreSQL 17.10 temporário e o Flyway aplicou a migration V1. Nenhum teste ou arquivo de aplicação foi alterado para obter esse resultado.
+Esse resultado pertence ao checkpoint de 2026-09-07. A Issue #11 não altera código, configuração, migration ou testes automatizados; suas verificações obrigatórias são links, diff e consistência textual.
 
-## Documentação
+## Documentação desta entrega
 
-Antes do commit `17502f9`, o repositório não possuía:
+A Issue #11:
 
-```text
-README.md
-AGENTS.md
-CONTRIBUTING.md
-docs/
-```
+- incorpora a baseline e o backlog em `docs/mvp/`;
+- preserva a auditoria técnica como relatório datado em `docs/auditorias/`;
+- mantém fora da documentação pública o antigo contexto de continuidade que contém detalhes operacionais específicos;
+- separa prompts operacionais em `prompts/`;
+- marca a ADR-0004 como aceita após a implementação e o merge da PR #9;
+- corrige referências atuais que ainda tratavam `EquipmentResponse` como trabalho futuro.
 
-O commit `17502f9` criou essa fundação documental. A revisão final corrige o estado volátil, explicita divergências e valida a consistência antes de push e Pull Request. A branch não altera o código de aplicação.
+Materiais históricos com contexto operacional específico não integram a árvore pública. Uma eventual versão educacional deverá ser outro documento, totalmente reescrito e sintético.
 
-## Feature em andamento
+## Segurança e limites
 
-Issue #8 — **Desacoplar respostas da API da entidade Equipment**.
+O RefrigOps continua sendo sistema de apoio e registro. Esta entrega não introduz comandos, setpoints, alarmes, cálculos físicos, estimativas operacionais ou integração com equipamentos.
 
-Implementado na branch `feature/equipment-response`:
+Dados de desenvolvimento da MVP devem permanecer fictícios. A experiência profissional pode inspirar o problema, mas equipamentos, layout, operação, horários, pessoas, instrumentos, configurações, valores e procedimentos de instalações reais não fazem parte da documentação pública. Nenhuma documentação substitui procedimentos, intertravamentos, instrumentos certificados ou profissionais habilitados.
 
-- `EquipmentResponse` com os campos públicos já existentes;
-- conversão de `Equipment` para `EquipmentResponse` na fronteira HTTP;
-- GET e POST sem exposição direta da entidade JPA;
-- conteúdo JSON de GET e POST coberto por testes;
-- status HTTP 200 preservado no POST;
-- Service e Repository mantidos independentes dos DTOs HTTP;
-- nenhuma alteração de schema ou migration.
+## Pendências e bloqueios
 
-## Issue técnica atual
+- A Issue #11 precisa passar por PR, revisão técnica, sessão de aprendizagem e autorização de merge.
+- A #12 / MVP-ISSUE-002 permanece bloqueada até o merge da #11.
+- As decisões técnicas T-01 a T-05 serão tratadas somente nas Issues arquiteturais previstas.
+- O refinamento sobre tentativas inválidas de PIN permanece reservado à Issue #26.
 
-Issue #8 criada no GitHub e implementada nesta branch. A próxima etapa é revisão manual da Pull Request, sem merge automático.
+## Próximo passo permitido
 
-## Pendências
-### Revisão antes de publicação pública
-
-Não foram encontrados credenciais, tokens, senhas reais, dados pessoais ou endereços de rede industrial. Ainda precisam de decisão explícita antes de eventual publicação pública:
-
-- códigos, rota, salas e regimes dos equipamentos;
-- fabricantes, famílias de controladores e exemplos de variáveis exibidas;
-- exemplos sanitizados de manutenção e passagem de turno;
-- nível de detalhe permitido para o contexto da instalação.
-
-### Produto e arquitetura
-
-- confirmar o MVP de ronda e a prioridade em relação à consolidação de Equipment;
-- revisar os estados de Equipment;
-- revisar e aprovar a Pull Request da Issue #8;
-
-## Bloqueios
-A implementação de regras de processo industrial continua bloqueada por descoberta e validação de domínio.
-
-## Próximo resultado recomendado
-
-1. revisar manualmente a Pull Request da Issue #8;
-2. não realizar merge antes da revisão;
-3. manter status HTTP, erros, duplicidade, busca e atualização fora deste incremento.
-
-Nota editorial: detalhes de classificação e bloqueios vinculados a ativos específicos foram suprimidos, sem alterar os checkpoints técnicos acima ou atribuir novas decisões àquela data.
+Concluir o ciclo da Issue #11 sem merge automático. Somente depois do merge e da sincronização da `main` poderá começar a #12 / MVP-ISSUE-002, em outra branch e outra Pull Request.
