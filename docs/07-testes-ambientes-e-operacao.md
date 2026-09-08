@@ -17,6 +17,14 @@ usuário: refrigops
 ```
 
 A aplicação usa as propriedades em `src/main/resources/application.properties`.
+A senha é obrigatoriamente fornecida por `REFRIGOPS_DB_PASSWORD`, sem valor
+padrão versionado.
+
+O Docker Compose lê o arquivo local `.env` automaticamente durante a
+interpolação. Isso não injeta a variável em uma aplicação Spring Boot iniciada
+diretamente no host: nesse fluxo, `REFRIGOPS_DB_PASSWORD` também precisa existir
+na sessão do processo Java. O README apresenta uma forma de carregá-la no
+PowerShell sem exibir o valor ou gravá-lo no histórico de comandos.
 
 ### Testes automatizados
 
@@ -176,7 +184,16 @@ O container de Testcontainers é descartável; portas diferentes entre execuçõ
 
 ## 9. Configuração e segredos
 
-As credenciais atuais são apenas locais. Antes de outro ambiente:
+As credenciais de desenvolvimento são apenas locais. O repositório mantém
+somente `.env.example`, com placeholder; arquivos `.env` reais são ignorados.
+
+Em volumes PostgreSQL existentes, mudar `POSTGRES_PASSWORD` na configuração do
+container não altera a senha do usuário já inicializado. A rotação deve ser
+feita explicitamente no PostgreSQL, preservando o volume. Não executar
+`docker compose down -v`, remover volumes ou recriar o banco como forma de trocar
+a credencial.
+
+Antes de outro ambiente:
 
 - usar variáveis ou mecanismo seguro;
 - não commitar segredos;
