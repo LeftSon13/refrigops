@@ -123,7 +123,13 @@ Após o merge:
 
 ## Segurança e dados
 
+Antes de preparar conteúdo para commit ou publicação, leia a
+[política de segurança da informação e publicação](docs/13-seguranca-informacao-e-publicacao.md)
+e execute o checklist definido nela.
+
 - não incluir credenciais, tokens, arquivos `.env`, dados pessoais ou informações industriais sensíveis;
-- usar exemplos fictícios ou anonimizados;
+- usar exemplos fictícios identificados com `DEMO-*`, sem copiar ou mascarar superficialmente dados reais;
+- considerar o risco de correlação entre informações aparentemente inofensivas;
+- revisar arquivos novos, imagens, logs, artefatos, `git diff`, staging e destino antes do push;
 - não conectar testes ao banco de desenvolvimento ou produção;
 - não publicar repositórios, imagens, logs ou dados sem autorização.
