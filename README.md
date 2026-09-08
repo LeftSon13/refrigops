@@ -53,14 +53,53 @@ Consulte [docs/11-contexto-atual.md](docs/11-contexto-atual.md) antes de qualque
 
 ## Executar localmente
 
-Na raiz do repositório:
+O PostgreSQL e a aplicação usam a variável `REFRIGOPS_DB_PASSWORD`. Crie o
+arquivo local a partir do exemplo e substitua o placeholder por uma senha
+própria, sem compartilhar ou versionar o valor:
 
 ```powershell
-docker compose up -d
+Copy-Item .env.example .env
+```
+
+O Docker Compose lê `.env` automaticamente para interpolar a variável. Uma
+aplicação Spring Boot iniciada diretamente no host não lê esse arquivo por si
+só. Antes de iniciar a aplicação, carregue a mesma senha apenas na sessão atual
+do PowerShell, usando uma entrada que não exibe os caracteres nem grava o valor
+no histórico:
+
+```powershell
+$senhaSegura = Read-Host 'Senha local do PostgreSQL' -AsSecureString
+$credencialLocal = [pscredential]::new('refrigops', $senhaSegura)
+$env:REFRIGOPS_DB_PASSWORD = $credencialLocal.GetNetworkCredential().Password
+Remove-Variable senhaSegura, credencialLocal
+
+docker compose up -d postgres
 .\mvnw.cmd spring-boot:run
 ```
 
 A aplicação usa PostgreSQL em `localhost:5433` e, por padrão, inicia o servidor HTTP na porta `8080`.
+
+Ao encerrar o trabalho, remova a variável da sessão atual:
+
+```powershell
+Remove-Item Env:REFRIGOPS_DB_PASSWORD
+```
+
+Em um volume PostgreSQL já inicializado, alterar `POSTGRES_PASSWORD` não muda a
+senha do usuário existente. Preserve o volume e atualize a senha explicitamente
+com `psql`; nunca use `docker compose down -v` para fazer essa rotação.
+
+Com o container ativo, abra o `psql` e use o prompt interativo, que não exibe a
+senha digitada ou colada:
+
+```powershell
+docker exec -it refrigops-postgres psql -U refrigops -d refrigops
+```
+
+```text
+\password refrigops
+\q
+```
 
 Endpoints atuais:
 
