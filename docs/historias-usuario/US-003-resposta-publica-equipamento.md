@@ -1,6 +1,6 @@
 # US-003 — Receber representação pública de equipamento
 
-- Estado: implementada e integrada à `main` pela PR #9 em `c8a2802`
+- Estado: implementada e integrada à `main` pela PR #9 em `76b7ca4`
 - Issue: #8 — Desacoplar respostas da API da entidade Equipment
 
 ## História

@@ -1,7 +1,7 @@
 # ADR-0004 — Separar contratos HTTP das entidades
 
 - Status: Aceita
-- Implementada pela Issue #8 e integrada pela PR #9 em `c8a2802`
+- Implementada pela Issue #8 e integrada pela PR #9 em `76b7ca4`
 
 ## Contexto
 
@@ -60,4 +60,4 @@ Esses campos foram preservados no contrato de criação e listagem coberto pelos
 - `EquipmentResponse.from(Equipment)` realiza o mapeamento explícito na fronteira HTTP;
 - GET e POST retornam DTO, não a entidade JPA;
 - Service e Repository permanecem independentes dos DTOs HTTP;
-- a PR #9 foi merged em 2026-09-07 no commit `c8a2802`.
+- a PR #9 foi merged em 2026-09-07 no commit `76b7ca4`.

@@ -27,18 +27,18 @@ início técnico com Equipment
 ### Inicialização
 
 ```text
-993c026 chore: initialize RefrigOps project
+dce1a5d chore: initialize RefrigOps project
 ```
 
 ### PR #1 — persistência e API inicial
 
 ```text
-62c97e6 feat: add equipment persistence foundation
-450cac9 test: verify equipment repository persistence
-be66caa feat: expose equipment listing endpoint
-9bf6f13 feat: enforce default equipment state on creation
-19605e2 refactor: desacopla service do DTO da camada controller
-c1f3992 Merge pull request #1
+473477b feat: add equipment persistence foundation
+306e937 test: verify equipment repository persistence
+311e0df feat: expose equipment listing endpoint
+dbde207 feat: enforce default equipment state on creation
+7bb621b refactor: desacopla service do DTO da camada controller
+1ac18d9 Merge pull request #1
 ```
 
 Aprendizados:
@@ -53,9 +53,9 @@ Aprendizados:
 ### Issue #2 / PR #3 — Testcontainers
 
 ```text
-6c5c2ba build: adiciona dependências do Testcontainers
-de0b35c test: isola testes de integração com PostgreSQL temporário
-1107e89 Merge pull request #3
+d6edbf4 build: adiciona dependências do Testcontainers
+3127cc9 test: isola testes de integração com PostgreSQL temporário
+a2dee6a Merge pull request #3
 ```
 
 Motivação:
@@ -73,9 +73,9 @@ Aprendizados:
 ### Issue #4 / PR #5 — Bean Validation
 
 ```text
-5914dae feat: valida dados no cadastro de equipamentos
-cd6a81c test: cobre validação do cadastro de equipamentos
-938480a Merge pull request #5
+3cf48ab feat: valida dados no cadastro de equipamentos
+b794a14 test: cobre validação do cadastro de equipamentos
+5b85711 Merge pull request #5
 ```
 
 Aprendizados:

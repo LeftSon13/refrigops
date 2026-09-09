@@ -12,7 +12,7 @@ Branch e commit:
 
 ```text
 main
-c8a2802 Merge pull request #9 from LeftSon13/feature/equipment-response
+checkpoint observado antes do rewrite (equivalente saneado: 76b7ca4) — Merge pull request #9 from LeftSon13/feature/equipment-response
 ```
 
 O `HEAD` local e `refs/heads/main` no remoto apontavam para o mesmo commit. A PR #9 integrou `EquipmentResponse` sem alterar entidade, Service, Repository ou schema. O estado mais recente da branch e das validações fica em [`11-contexto-atual.md`](11-contexto-atual.md).
