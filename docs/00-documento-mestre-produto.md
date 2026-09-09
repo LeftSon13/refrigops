@@ -258,7 +258,7 @@ Nenhum indicador operacional ou financeiro deve ser prometido sem dados de base.
 
 O último checkpoint registrado contém uma API de equipamentos com persistência, listagem, criação e validação. O projeto usa Java 21, Spring Boot, PostgreSQL, Flyway, Testcontainers, JUnit e MockMvc.
 
-O snapshot técnico atual está no merge `c8a2802`, que integrou `EquipmentResponse` pela PR #9. Branch, testes e ambiente mais recentes devem ser consultados em [`11-contexto-atual.md`](11-contexto-atual.md).
+O snapshot técnico registrado foi observado antes do rewrite no merge da PR #9, cujo equivalente saneado é `76b7ca4`; essa entrega integrou `EquipmentResponse`. Branch, testes e ambiente mais recentes devem ser consultados em [`11-contexto-atual.md`](11-contexto-atual.md).
 
 ## 14. Continuidade aprovada
 

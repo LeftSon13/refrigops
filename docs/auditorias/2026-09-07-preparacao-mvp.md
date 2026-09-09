@@ -1,6 +1,6 @@
 # RefrigOps — Auditoria para preparação da MVP
 
-**Checkpoint:** `c8a2802a188787b928e56026a286a548b3bde9ac`
+**Checkpoint:** observado antes do rewrite; equivalente saneado: `76b7ca4316419dd66dc902b5b3271fce57fd9c19`
 **Validação local:** noite de 06/09/2026, horário de Brasília.
 **Escopo:** repositório, histórico Git disponível, documentação, configuração, build, testes, execução isolada, banco temporário e consulta pontual a avisos oficiais de segurança.
 
@@ -37,11 +37,11 @@ A arquitetura existente é pequena e aproveitável. Não há evidência que just
 |---|---|
 | Repositório | diretório raiz do checkout `refrigops` |
 | Branch atual | `main` |
-| HEAD | `c8a2802a188787b928e56026a286a548b3bde9ac` |
+| HEAD | observado antes do rewrite; equivalente saneado: `76b7ca4316419dd66dc902b5b3271fce57fd9c19` |
 | Último commit | Merge da PR #9, `feature/equipment-response` |
 | Working tree e staging | Limpos no início e no encerramento |
 | Arquivos não rastreados, fora dos ignorados | Nenhum |
-| Branch local adicional | `feature/equipment-response`, em `487488d` |
+| Branch local adicional | `feature/equipment-response`, em commit observado antes do rewrite (equivalente saneado: `f43cddb`) |
 | Remoto | [LeftSon13/refrigops](https://github.com/LeftSon13/refrigops) |
 | Verificação remota | `refs/heads/main` aponta para o mesmo HEAD |
 | Tags | Nenhuma encontrada localmente ou na consulta remota |
@@ -52,13 +52,13 @@ A referência local `origin/feature/equipment-response` ainda existe, mas a cons
 Marcos relevantes:
 
 ```text
-938480a → validação do cadastro
-17502f9 → fundação documental
-369a747 → merge da revisão documental
-bc21afb → implementação de EquipmentResponse
-d95bc16 → cobertura do contrato JSON
-487488d → atualização documental da resposta pública
-c8a2802 → merge da entrega de EquipmentResponse
+checkpoint pré-rewrite (equivalente saneado: 5b85711) → validação do cadastro
+checkpoint pré-rewrite (equivalente saneado: e45c899) → fundação documental
+checkpoint pré-rewrite (equivalente saneado: 3808fa9) → merge da revisão documental
+checkpoint pré-rewrite (equivalente saneado: 326455f) → implementação de EquipmentResponse
+checkpoint pré-rewrite (equivalente saneado: 4430a79) → cobertura do contrato JSON
+checkpoint pré-rewrite (equivalente saneado: f43cddb) → atualização documental da resposta pública
+checkpoint pré-rewrite (equivalente saneado: 76b7ca4) → merge da entrega de EquipmentResponse
 ```
 
 **CONFIRMADO:** não havia trabalho local versionado pendente em risco.

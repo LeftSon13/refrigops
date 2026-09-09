@@ -2,7 +2,7 @@
 
 **Fonte principal:** [`documento-mestre-v0.1.md`](documento-mestre-v0.1.md), baseline aprovada em 07/09/2026.
 **Estado:** planejamento publicado sob a EPIC #10; não autoriza implementação em lote nem dispensa a revisão individual de cada Issue.
-**Checkpoint técnico consultado:** `main` em `c8a2802`, limpa no início desta decomposição.
+**Checkpoint técnico consultado:** `main` em um checkpoint pré-rewrite (equivalente saneado: `76b7ca4`), limpa no início desta decomposição.
 **Escopo:** EPIC principal e 59 Issues provisórias, `MVP-ISSUE-001` a `MVP-ISSUE-059`.
 
 ## A. Resumo executivo
@@ -181,7 +181,7 @@ Cada Issue funcional pode criar somente a fixture ou o dado sintético mínimo n
 **Grupo:** 0. Baseline e contexto.
 
 **Problema:** o Documento Mestre aprovado é externo ao checkout; `docs/11-contexto-atual.md` ainda descreve a Issue #8 como pendente, e a ADR-0004 ainda aparece como proposta apesar do DTO já merged.
-**Resultado esperado:** documentação versionada aponta para a baseline, registra `c8a2802` e alinha ADR-0004 ao código atual.
+**Resultado esperado:** documentação versionada aponta para a baseline, registra pelo equivalente saneado `76b7ca4` o checkpoint observado antes do rewrite e alinha ADR-0004 ao código atual.
 **Contexto:** elimina divergência antes de decompor qualquer comportamento técnico.
 **Rastreabilidade:** REQ-MVP-001 a REQ-MVP-012; DEC-P-01 a DEC-P-45; ADR-0004; `docs/09-contrato-api-atual.md`; `docs/11-contexto-atual.md`.
 **Comportamento atual:** documentação parcialmente desatualizada; código de `EquipmentResponse` existe.

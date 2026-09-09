@@ -31,7 +31,7 @@ Sua proposta não é substituir o operador nem comandar a planta. A visão é or
 - Testcontainers com PostgreSQL temporário;
 - API inicial de equipamentos com `EquipmentResponse` no contrato público;
 - validação HTTP no cadastro;
-- último merge funcional: PR #9, commit `c8a2802`;
+- último merge funcional: PR #9, commit `76b7ca4`;
 - última suíte registrada: 6 testes passando;
 - baseline aprovada da MVP v0.1 incorporada pela Issue #11.
 

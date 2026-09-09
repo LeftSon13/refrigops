@@ -13,14 +13,14 @@ Incorporação da baseline aprovada da MVP demonstrativa v0.1 ao repositório. E
 ```text
 repositório: LeftSon13/refrigops
 base: origin/main
-HEAD da base: bd63b82a19b9fba9b641fd70c06b1a3ab907de6e
+HEAD da base observado antes do rewrite; equivalente saneado: a073c1a5706975d4a8c4da656310be46d7e3b072
 último merge do repositório: PR #71 — remoção da credencial fixa do PostgreSQL
 último merge funcional: PR #9 — EquipmentResponse
 Issue desta entrega: #11 — MVP-ISSUE-001
 branch da entrega: docs/issue-11-baseline-rebuild
 ```
 
-Em 2026-09-07, a referência `origin/main` foi atualizada para `bd63b82`, merge da PR #71. A entrega da Issue #11 foi reconstruída diretamente dessa base em uma nova branch, sem incorporar a tentativa local anterior à sua ancestralidade.
+Em 2026-09-07, antes do rewrite, a referência `origin/main` foi atualizada para o merge da PR #71 (equivalente saneado: `a073c1a`). A entrega da Issue #11 foi reconstruída diretamente dessa base em uma nova branch, sem incorporar a tentativa local anterior à sua ancestralidade.
 
 ## Baseline da MVP v0.1
 

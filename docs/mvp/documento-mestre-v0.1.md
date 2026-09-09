@@ -4,7 +4,7 @@
 **Estado:** documentação da MVP aprovada; não cria Issues nem autoriza implementação por si só.
 **Primeira entrega:** demonstração funcional com dados fictícios.
 **Tipos incluídos:** compressores e recipientes.
-**Checkpoint técnico:** auditoria concluída nesta conversa, sobre `c8a2802a188787b928e56026a286a548b3bde9ac`.
+**Checkpoint técnico:** auditoria concluída nesta conversa sobre um checkpoint pré-rewrite (equivalente saneado: `76b7ca4316419dd66dc902b5b3271fce57fd9c19`).
 
 ## Como usar este documento
 
