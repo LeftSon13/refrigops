@@ -1,6 +1,6 @@
 # Contrato atual da API
 
-> Estado confirmado no código em 2026-09-03. Este documento descreve o comportamento atual, inclusive dívidas conhecidas; não significa que todo o contrato esteja aprovado como definitivo.
+> Estado confirmado no código em 2026-09-09. Este documento descreve o comportamento atual, inclusive dívidas conhecidas; não significa que todo o contrato esteja aprovado como definitivo.
 
 ## Base
 
@@ -60,10 +60,12 @@ Content-Type: application/json
 
 | Campo | Regra atual |
 |---|---|
-| `code` | `@NotBlank` |
-| `name` | `@NotBlank` |
+| `code` | `@NotBlank` e `@Size(max = 50)` |
+| `name` | `@NotBlank` e `@Size(max = 100)` |
 | `type` | `@NotNull` e enum válido na desserialização |
-| `location` | `@NotBlank` |
+| `location` | `@NotBlank` e `@Size(max = 100)` |
+
+Valores exatamente no limite são aceitos; valores maiores retornam HTTP 400 antes da persistência.
 
 ### Resposta válida atual
 
